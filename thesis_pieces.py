@@ -248,8 +248,7 @@ def ExtractFieldContent():
 	'f520a' : re.sub('\n', '', text.findtext('GetRecord/record/metadata/thesis/description')),
 	'f245c' : f245c,
 	'f260c' : text.findtext('GetRecord/record/metadata/thesis/date')[0:4],
-	'format' : text.findall('GetRecord/record/metadata/thesis/format'),
-#	'fadvisor' : re.sub('(\w*)(, )(\w.*)', '\\3 \\1', text.findtext('GetRecord/record/metadata/thesis/contributor')),
+        'f300a' : re.sub('p.', '', text.findall('GetRecord/record/metadata/thesis/format')[1].text,
 	'f856u' : text.findtext('GetRecord/record/metadata/thesis/identifier'),
 	'fdegree' : text.findtext('GetRecord/record/metadata/thesis/degree/name'),
 	'rev_date' : strftime("%b. %d, %Y").replace(' 0', ' ').replace('Jun.', 'June').replace('Jul.', 'July'),
@@ -322,10 +321,6 @@ def ExtractAdvisors(x):
 
 def ExtractFileSize(x):
 	content_dict['filesize'] = content_dict['format'][2].text
-	return content_dict
-
-def Extract300(x):
-	content_dict['f300a'] = re.sub('(p.)(\d*)', '\\2 \\1', content_dict['format'][1].text)
 	return content_dict
 
 def CleanupProgramNames(x):
@@ -408,7 +403,6 @@ for ucin in ETD_UniqueIDs:
 
 	content_dict = ExtractAdvisors(content_dict)
 	content_dict = ExtractFileSize(content_dict)
-	content_dict = Extract300(content_dict)
 	
 	#ETD full-text template
 	full_etd = open('source\\RDA_fulltext_template.txt').read() % content_dict
