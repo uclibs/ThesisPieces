@@ -248,7 +248,8 @@ def ExtractFieldContent():
 	'f520a' : re.sub('\n', '', text.findtext('GetRecord/record/metadata/thesis/description')),
 	'f245c' : f245c,
 	'f260c' : text.findtext('GetRecord/record/metadata/thesis/date')[0:4],
-        'f300a' : re.sub('p.', '', text.findall('GetRecord/record/metadata/thesis/format')[1].text,
+        'f300a' : re.sub('p.', '', text.findall('GetRecord/record/metadata/thesis/format')[1].text),
+        'filesize' : text.findall('GetRecord/record/metadata/thesis/format')[2].text,
 	'f856u' : text.findtext('GetRecord/record/metadata/thesis/identifier'),
 	'fdegree' : text.findtext('GetRecord/record/metadata/thesis/degree/name'),
 	'rev_date' : strftime("%b. %d, %Y").replace(' 0', ' ').replace('Jun.', 'June').replace('Jul.', 'July'),
@@ -430,9 +431,9 @@ EmbargoFileName_mrc = strftime("%Y%m%d") + '_embargoETD.mrc'
 FullFileName_mrc = strftime("%Y%m%d") + '_fulltextETD.mrc'
 
 if fullcount > 0:
-	subprocess.call(['C:\\Program Files\\MarcEdit 5.0\\cmarcedit.exe', '-s', TargetDir + FullFileName_mrk, '-d', TargetDir + FullFileName_mrc, '-make'])
+	subprocess.call(['C:\\Program Files\\MarcEdit 6\\cmarcedit.exe', '-s', TargetDir + FullFileName_mrk, '-d', TargetDir + FullFileName_mrc, '-make'])
 if embcount > 0:
-	subprocess.call(['C:\\Program Files\\MarcEdit 5.0\\cmarcedit.exe', '-s', TargetDir + EmbargoFileName_mrk, '-d', TargetDir + EmbargoFileName_mrc, '-make'])
+	subprocess.call(['C:\\Program Files\\MarcEdit 6\\cmarcedit.exe', '-s', TargetDir + EmbargoFileName_mrk, '-d', TargetDir + EmbargoFileName_mrc, '-make'])
 if BoolUnrecognizedASCII > 0: 
 	AsciiReport = open(TargetDir + strftime("%Y%m%d") + '_UnrecognizedAsciiReport.txt', 'r').read()
 	print '\n\n***Script found unrecognized diacritic html character code(s)***\n'
