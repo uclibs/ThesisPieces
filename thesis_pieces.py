@@ -276,7 +276,7 @@ def ExtractCreator(x):#remove honorifics and invert author name for SOR
 	return creator, f245c
 
 def ExtractTitle(x):#set skip and detect subtitles
-	title = text.findtext('GetRecord/record/metadata/thesis/title')[0] + text.findtext('GetRecord/record/metadata/thesis/title')[1:].lower()
+	title = text.findtext('GetRecord/record/metadata/thesis/title')
 	#set skip (245 ind 2) for English initial articles
 	if re.match('The\s', title):
 		f245ind2 = '4'
