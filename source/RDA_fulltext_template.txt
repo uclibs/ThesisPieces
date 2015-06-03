@@ -5,12 +5,11 @@
 =100  1\$a%(f100a)s.$eauthor.
 =245  1%(f245ind2)s$a%(f245a)s%(f245b)s /$cby %(f245c)s.
 =264  \\$aCincinnati, Ohio :$bUniversity of Cincinnati,$c%(f260c)s.
-=264  \\$a%(f260c)s
 =300  \\$a1 online resource (%(f300a)s pages) :$bdigital, PDF.
-=336  \\$atext$btxt$2rdacontent.
-=337  \\$acomputer$bc$2rdamedia.
-=338  \\$aonline resource$bcr$2rdacarrier.
-=347  \\$adigital$bPDF$c%(filesize)s$2rda.
+=336  \\$atext$btxt$2rdacontent
+=337  \\$acomputer$bc$2rdamedia
+=338  \\$aonline resource$bcr$2rdacarrier
+=347  \\$adigital$bPDF$c%(filesize)s$2rda
 =500  \\$aAdvisors: %(fadvisor)s.
 =500  \\$aIncludes abstract.
 =500  \\$aKeywords: %(fkeywrd)s.
