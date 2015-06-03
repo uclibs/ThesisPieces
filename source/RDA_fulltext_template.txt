@@ -4,7 +4,7 @@
 =008  %(f008date)ss%(f260c)s\\\\ohu\\\\\sbm\\s000\0\eng\d
 =100  1\$a%(f100a)s.$eauthor.
 =245  1%(f245ind2)s$a%(f245a)s%(f245b)s /$cby %(f245c)s.
-=264  \\$aCincinnati, Ohio :$bUniversity of Cincinnati,$c%(f260c)s.
+=264  \1$aCincinnati, Ohio :$bUniversity of Cincinnati,$c%(f260c)s.
 =300  \\$a1 online resource (%(f300a)s pages) :$bdigital, PDF.
 =336  \\$atext$btxt$2rdacontent
 =337  \\$acomputer$bc$2rdamedia
