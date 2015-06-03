@@ -1,4 +1,5 @@
 =LDR  #####nam  22#####Ka 45e0
+=040  $aCIN$cCINerda
 =006  m     |  d   
 =007  cr|mnu
 =008  %(f008date)ss%(f260c)s\\\\ohu\\\\\sbm\\s000\0\eng\d
