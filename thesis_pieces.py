@@ -320,10 +320,6 @@ def ExtractAdvisors(x):
 		content_dict['fadvisor'] = "|<NoAdvisor_DeleteThisField>"
 	return content_dict
 
-def ExtractFileSize(x):
-	content_dict['filesize'] = content_dict['format'][2].text
-	return content_dict
-
 def CleanupProgramNames(x):
 	if content_dict['fdisc'] == ' (Community Planning)':
 		content_dict['fdisc'] = ''
@@ -403,7 +399,6 @@ for ucin in ETD_UniqueIDs:
 	content_dict = ExtractKeywords(content_dict)
 
 	content_dict = ExtractAdvisors(content_dict)
-	content_dict = ExtractFileSize(content_dict)
 	
 	#ETD full-text template
 	full_etd = open('source\\RDA_fulltext_template.txt').read() % content_dict
