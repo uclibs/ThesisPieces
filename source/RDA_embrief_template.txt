@@ -1,4 +1,4 @@
-=LDR  #####nam\\22#####\a\4500
+=LDR  #####nam\\22#####\i\4500
 =007  cr mnu
 =100  1\$a%(f100a)s$eauthor.
 =245  1%(f245ind2)s$a%(f245a)s$h[electronic resource]%(f245b)s /$cby %(f245c)s.

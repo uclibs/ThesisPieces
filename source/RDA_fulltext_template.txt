@@ -1,4 +1,4 @@
-=LDR  #####nam  22#####Ka 45e0
+=LDR  #####nam  22#####Ki 45e0
 =040  \\$aCIN$cCIN$erda
 =006  m     |  d   
 =007  cr|mnu
