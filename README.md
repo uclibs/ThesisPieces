@@ -12,7 +12,7 @@ Harvest and process Electronic Thesis and Dissertation records from the OhioLINK
 
 Create .txt file containing ETD email notifications (in Outlook, select all the messages and save as .txt). The script yanks all *ucin* identifiers from the notifications file and searches each in the OhioLINK ETD center. 
 
-1. Execute script by double-clicking icon or invoking from command line.
+1. Execute script by double-clicking thesis_pieces.py or invoking from command line( $ python thesis_pieces.py ).
 2. Select text file of *ucin* indentifiers in pop-up dialog.
 3. Monitor script while records are downloaded and processed. 
 
