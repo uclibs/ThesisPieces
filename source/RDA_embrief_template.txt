@@ -2,18 +2,18 @@
 =007  cr mnu
 =100  1\$a%(f100a)s$eauthor.
 =245  1%(f245ind2)s$a%(f245a)s$h[electronic resource]%(f245b)s /$cby %(f245c)s.
-=264  \1$aCincinnati, Ohio :$bUniversity of Cincinnati,$c%(f260c)s.
+=264  \1$aCincinnati, Ohio :$bUniversity of Cincinnati,$c%(f264c)s.
 =300  \\$a1 online resource (%(f300a)s pages) :$bdigital, PDF.
 =336  \\$atext$btxt$2rdacontent
 =337  \\$acomputer$bc$2rdamedia
 =338  \\$aonline resource$bcr$2rdacarrier
-=347  \\$adigital$bPDF$c%(filesize)s$2rda
-=500  \\$aAdvisors: %(fadvisor)s.
-=502  \\$aThesis (%(fdegree)s)--University of Cincinnati, %(f260c)s.
-=506  \\$aFull text release has been delayed at the author's request until %(delaydate)s.
+=347  \\$adigital$bPDF$c%(f347c)s$2rda
+=500  \\$aAdvisors: %(f500a_advisors)s.
+=502  \\$aThesis (%(f502a_degree)s)--University of Cincinnati, %(f264c)s.
+=506  \\$aFull text release has been delayed at the author's request until %(f506a_delay_date)s.
 =520  3\$a%(f520a)s
-=588  \\$aTitle from OhioLINK abstract screen (viewed %(rev_date)s).
-=610  20$aUniversity of Cincinnati$xTheses. %(fdegree)s%(fdisc)s. %(f260c)s
+=588  \\$aTitle from OhioLINK abstract screen (viewed %(f588a_review_date)s).
+=610  20$aUniversity of Cincinnati$xTheses. %(f610a_degree)s%(f610a_discipline)s. %(f264c)s
 =856  40$zConnect to abstract online. (Full text currently unavailable)$u%(f856u)s
 =949  \\$a*recs=b;b2=t;bn=bolin;ct=  -  -  ;b3=-;cy=ohu;
 =949  \1$lolink$t99$rs
