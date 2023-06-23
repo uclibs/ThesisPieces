@@ -1,42 +1,51 @@
-from Tkinter import *
-from tkFileDialog import askopenfilename
+import tkinter as tk
+from tkinter.filedialog import askopenfilename
 from xml.etree.ElementTree import ElementTree, fromstring
 from time import strftime, sleep
-from urllib import urlopen
+from urllib.request import urlopen
 import datetime, re, os, subprocess
 from source.char_ref_dict import *
 from source.methods import *
 
+MARC_EDIT_PATH = "C:\\Program Files\\Terry Reese\\MarcEdit 7.6\\cmarcedit.exe"
+OAI_PREFIX = "https://etd.ohiolink.edu/apexprod/!etd_search_oai?verb=GetRecord&metadataPrefix=oai_etdms&identifier=oai:etd.ohiolink.edu:"
 
-print """
+EmbargoFileName_mrk = f"{strftime('%Y%m%d')}_embargoETD.mrk"
+FullFileName_mrk    = f"{strftime('%Y%m%d')}_fulltextETD.mrk"
+EmbargoFileName_mrc = f"{strftime('%Y%m%d')}_embargoETD.mrc"
+FullFileName_mrc    = f"{strftime('%Y%m%d')}_fulltextETD.mrc"
+
+
+print("""
 #######                                  ######                                
    #    #    # ######  ####  #  ####     #     # # ######  ####  ######  ####  
    #    #    # #      #      # #         #     # # #      #    # #      #      
    #    ###### #####   ####  #  ####     ######  # #####  #      #####   ####  
    #    #    # #           # #      #    #       # #      #      #           # 
-   #    #    # #      #    # # #    #    #  1.5  # #      #    # #      #    # 
+   #    #    # #      #    # # #    #    #  2.0  # #      #    # #      #    # 
    #    #    # ######  ####  #  ####     #       # ######  ####  ######  ####  
 
 
    
   /////////////////UC Libraries--Electronic Resources Dept./////////////////
 
-
-"""
+ech
+""")
 
 
 def BrowseToFile(): #prompt user to select file; isolate ETD unique IDs
-	root=Tk()
+	root = tk.Tk()
 	root.withdraw()
 	filename = askopenfilename(filetypes=[("textfiles","*.txt"),("allfiles","*")], title="Thesis Pieces -- Select input file")
 	TargetDir = re.sub('(.*)(?<=/).*$', '\\1', filename)
-	print filename
+	print(filename)
 	InputFileText = open(filename).read()
 	ETD_UniqueIDs = re.findall('ucin\d+', InputFileText)
 	return filename, TargetDir, ETD_UniqueIDs
 
 def CharRefReplace(x): # replace character references, fix degree types, remove garbage xml
 	keys = dict.keys(CharRefDict)
+	keys = list(CharRefDict.keys())
 	for key in range(len(keys)):
 		x = re.sub(CharRefDict[keys[key]][0], CharRefDict[keys[key]][1], x)
 	#find and output file with unknown ascii chars
@@ -50,7 +59,7 @@ def CharRefReplace(x): # replace character references, fix degree types, remove 
 		asciif.close()
 	x = re.sub('\$#.*?;', '|', x)
 	x = re.sub('&#\d*?;', '|', x)
-	x = x.decode(encoding='UTF-8',errors='strict')
+	#x = x.decode(encoding='UTF-8',errors='strict')
 	for i in x:
 		#print i
 		if ord(i) > 128:
@@ -93,17 +102,18 @@ filename, TargetDir, ETD_UniqueIDs = BrowseToFile()
 
 ETD_UniqueIDs = dict.fromkeys(ETD_UniqueIDs).keys()
 
-print 'Downloading ' + str(len(ETD_UniqueIDs)) + ' ETDs'
+print('Downloading ' + str(len(ETD_UniqueIDs)) + ' ETDs')
 
 ETD_UniqueIDs = sorted(ETD_UniqueIDs)
 
-print "Processing...\n"
+print("Processing...\n")
 
 #loop pulls XML recs from Olink and writes to tempfile
 for ucin in ETD_UniqueIDs:
+	print(ucin)
 	sleep(1)
-	page = urlopen("https://etd.ohiolink.edu/!etd_search_oai?verb=GetRecord&metadataPrefix=oai_etdms&identifier=oai:etd.ohiolink.edu:" + ucin)
-	page = page.read()
+	page = urlopen(f"{OAI_PREFIX}{ucin}")
+	page = page.read().decode('utf-8')
 	#replace character references
 	page, BoolUnrecognizedASCII = CharRefReplace(page)
 	
@@ -132,28 +142,23 @@ for ucin in ETD_UniqueIDs:
 		embcount = embcount + 1
 
 	#write to file
-	print rec_output
+	#print(rec_output)
 	f = open(outputfile, 'a')
 	f.write(rec_output)
 	f.close()
 
-EmbargoFileName_mrk = strftime("%Y%m%d") + '_embargoETD.mrk'
-FullFileName_mrk = strftime("%Y%m%d") + '_fulltextETD.mrk'
-EmbargoFileName_mrc = strftime("%Y%m%d") + '_embargoETD.mrc'
-FullFileName_mrc = strftime("%Y%m%d") + '_fulltextETD.mrc'
-
 try:
     if fullcount > 0:
-	subprocess.call(['C:\\Program Files\\MarcEdit 6\\cmarcedit.exe', '-s', TargetDir + FullFileName_mrk, '-d', TargetDir + FullFileName_mrc, '-make'])
+        subprocess.call([MARC_EDIT_PATH, '-s', TargetDir + FullFileName_mrk, '-d', TargetDir + FullFileName_mrc, '-make'])
     if embcount > 0:
-	subprocess.call(['C:\\Program Files\\MarcEdit 6\\cmarcedit.exe', '-s', TargetDir + EmbargoFileName_mrk, '-d', TargetDir + EmbargoFileName_mrc, '-make'])
+        subprocess.call([MARC_EDIT_PATH, '-s', TargetDir + EmbargoFileName_mrk, '-d', TargetDir + EmbargoFileName_mrc, '-make'])
     if BoolUnrecognizedASCII > 0: 
-	AsciiReport = open(TargetDir + strftime("%Y%m%d") + '_UnrecognizedAsciiReport.txt', 'r').read()
-	print '\n\n***Script found unrecognized diacritic html character code(s)***\n'
-	print AsciiReport
-	print 'See ' + TargetDir + strftime("%Y%m%d") + '_UnrecognizedAsciiReport.txt'' for details\n'
+        AsciiReport = open(TargetDir + strftime("%Y%m%d") + '_UnrecognizedAsciiReport.txt', 'r').read()
+        print('\n\n***Script found unrecognized diacritic html character code(s)***\n')
+        print(AsciiReport)
+        print('See ' + TargetDir + strftime("%Y%m%d") + '_UnrecognizedAsciiReport.txt'' for details\n')
 except OSError:
-    print "MARCedit could not be found - output MRK files only"
-#print full_etd
-#print brief_etd
-raw_input('\nProcess finished, press Enter')
+    print("MARCedit could not be found - output MRK files only")
+    #print full_etd
+    #print brief_etd
+input('\nProcess finished, press Enter')

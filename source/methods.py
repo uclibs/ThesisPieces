@@ -24,8 +24,8 @@ def f245b(text):
         title = text.findtext('GetRecord/record/metadata/thesis/title')
         f245b = re.sub('(\w.*?)(:\s)(.*)', '\\3', title)
         f245a = re.sub('(\w.*?)(:.*)', '\\1', title)
-        print 'f245a +' + f245a
-        print 'f245b +' + f245b
+        #print('f245a +' + f245a)
+        #print('f245b +' + f245b)
         if f245a == f245b:
             f245b = ''
         else: 
@@ -95,7 +95,7 @@ def f500a_keywords(text):
                 fsubx = subject.text
                 SubjectList.append(fsubx)
         if len(SubjectList) > 0:
-                #print SubjectList
+                #print(SubjectList)
                 #check for empty item at end of list, remove if present
                 SubjectList = filter(None, SubjectList)
                 f500a_keywords = "; ".join(SubjectList)
@@ -114,7 +114,7 @@ def f500a_advisors(text):
                 fadvis = re.sub('(\w*)(, )(\w.*)', '\\3 \\1', advisor.text)
                 AdvisorList.append(fadvis)
         if len(AdvisorList) > 0:
-                #print SubjectList
+                #print(SubjectList)
                 #check for empty item at end of list, remove if present
                 AdvisorList = filter(None, AdvisorList)
                 f500a_advisors = ", ".join(AdvisorList)
@@ -165,37 +165,40 @@ def f610a_discipline(text):
         f610a_discipline = re.search ('(?<=: )\s\(\w.*', re.sub('((?<=: )\w.*)', ' (\\1)', text.findtext('GetRecord/record/metadata/thesis/degree/discipline'))).group(0)
         f610a_degree = text.findtext('GetRecord/record/metadata/thesis/degree/name')
 
-	if f610a_discipline == ' (Community Planning)':
-		f610a_discipline = ''
-	if f610a_discipline == ' (Architecture (Master of))':
-		f610a_discipline = ''
-	if f610a_discipline == ' (Design)':
-		f610a_discipline = ''
-	if f610a_discipline == ' (Biostatistics (Environmental Health))':
-		f610a_discipline = ' (Biostatistics)'
-	if f610a_discipline == ' (Industrial Hygiene (Environmental Health))':
-		f610a_discipline = ' (Industrial Hygiene)'
-	if f610a_discipline == ' (Epidemiology (Environmental Health))':
-		f610a_discipline = ' (Epidemiology)'
-	if f610a_discipline == ' (Toxicology (Environmental Health))':
-		f610a_discipline = ' (Toxicology)'
-	if f610a_degree == 'Master of Architecture' and f610a_discipline == ' (Architecture)':
-		f610a_discipline = ''
-	if f610a_degree == 'Master of Music':
-		f610a_discipline = ''
-	if f610a_degree == 'Dr. of Education':
-		f610a_discipline = ''
-	if f610a_degree == 'Dr. of Musical Arts':
-		f610a_discipline = ''
+        if f610a_discipline == ' (Community Planning)':
+            f610a_discipline = ''
+            
+        if f610a_discipline == ' (Architecture (Master of))':
+            f610a_discipline = ''
+
+        if f610a_discipline == ' (Design)':
+            f610a_discipline = ''
+            
+        if f610a_discipline == ' (Biostatistics (Environmental Health))':
+            f610a_discipline = ' (Biostatistics)'
+        if f610a_discipline == ' (Industrial Hygiene (Environmental Health))':
+            f610a_discipline = ' (Industrial Hygiene)'
+        if f610a_discipline == ' (Epidemiology (Environmental Health))':
+            f610a_discipline = ' (Epidemiology)'
+        if f610a_discipline == ' (Toxicology (Environmental Health))':
+            f610a_discipline = ' (Toxicology)'
+        if f610a_degree == 'Master of Architecture' and f610a_discipline == ' (Architecture)':
+            f610a_discipline = ''
+        if f610a_degree == 'Master of Music':
+            f610a_discipline = ''
+        if f610a_degree == 'Dr. of Education':
+            f610a_discipline = ''
+        if f610a_degree == 'Dr. of Musical Arts':
+            f610a_discipline = ''
     except (IndexError, ValueError, AttributeError):
         f610a_discipline = "|"
     return f610a_discipline
 
 def f506a_delay_date(text):
     try:
-	delay = text.findtext('GetRecord/record/metadata/thesis/rights')
+        delay = text.findtext('GetRecord/record/metadata/thesis/rights')
         if delay != 'unrestricted' and delay != 'restricted; full text not available online':
-	   f506a_delay_date = datetime.datetime.strptime(re.search('\d*-\d\d-\d\d', text.findtext('GetRecord/record/metadata/thesis/rights')).group(0), "%Y-%m-%d").strftime("%b. %d, %Y").replace(' 0', ' ')
+            f506a_delay_date = datetime.datetime.strptime(re.search('\d*-\d\d-\d\d', text.findtext('GetRecord/record/metadata/thesis/rights')).group(0), "%Y-%m-%d").strftime("%b. %d, %Y").replace(' 0', ' ')
         else:
             f506a_delay_date = ''
     except (IndexError, ValueError, AttributeError):
